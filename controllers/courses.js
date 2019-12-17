@@ -43,10 +43,10 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
     });
 });
 
-// @desc    Add course
+// @desc    Create course
 // @route   POST /api/v1/bootcamps/:bootcampId/courses
 // @access  Private
-exports.addCourse = asyncHandler(async (req, res, next) => {
+exports.createCourse = asyncHandler(async (req, res, next) => {
     req.body.bootcamp = req.params.bootcampId;
     req.body.user = req.user.id;
 

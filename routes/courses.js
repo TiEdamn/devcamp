@@ -2,7 +2,7 @@ const express = require('express');
 const {
     getCourses,
     getCourse,
-    addCourse,
+    createCourse,
     updateCourse,
     deleteCourse
 } = require('../controllers/courses');
@@ -23,7 +23,7 @@ router
         }),
         getCourses
     )
-    .post(protect, authorize('publisher', 'admin'), addCourse);
+    .post(protect, authorize('publisher', 'admin'), createCourse);
 
 router
     .route('/:id')
