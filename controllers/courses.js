@@ -32,8 +32,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 
     if (!course) {
         return next(
-            new ErrorResponse(`No course with id of ${req.params.id}`),
-            404
+            new ErrorResponse(`No course with id of ${req.params.id}`, 404)
         );
     }
 
@@ -55,9 +54,9 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
     if (!bootcamp) {
         return next(
             new ErrorResponse(
-                `No bootcamp with id of ${req.params.bootcampId}`
-            ),
-            404
+                `No bootcamp with id of ${req.params.bootcampId}`,
+                404
+            )
         );
     }
 
@@ -87,8 +86,10 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 
     if (!course) {
         return next(
-            new ErrorResponse(`No course with id of ${req.params.bootcampId}`),
-            404
+            new ErrorResponse(
+                `No course with id of ${req.params.bootcampId}`,
+                404
+            )
         );
     }
 
@@ -121,8 +122,10 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 
     if (!course) {
         return next(
-            new ErrorResponse(`No course with id of ${req.params.bootcampId}`),
-            404
+            new ErrorResponse(
+                `No course with id of ${req.params.bootcampId}`,
+                404
+            )
         );
     }
 
