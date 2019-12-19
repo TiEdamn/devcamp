@@ -1,3 +1,7 @@
+const dotenv = require('dotenv');
+// Load env vars
+dotenv.config({ path: '.env' });
+
 const advancedResults = (model, populate) => async (req, res, next) => {
     // Copy req.query
     const reqQuery = { ...req.query };
@@ -36,7 +40,8 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
     // Pagination
     const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 25;
+    const limit =
+        parseInt(req.query.limit, 10) || parseInt(process.env.PAGE_LIMIT);
     const startIndex = parseInt(page - 1) * limit;
     const endIndex = page * limit;
     const total = await model.countDocuments();

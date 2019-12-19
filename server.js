@@ -16,7 +16,7 @@ const hpp = require('hpp');
 const cors = require('cors');
 
 // Load env vars
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: '.env' });
 
 // Connect to database
 connectDB();

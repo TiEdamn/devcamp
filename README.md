@@ -4,7 +4,11 @@
 
 ## Usage
 
-Rename "config/config.env.example" to "config/config.env" and update settings
+Rename ".env.example" to ".env" and update settings
+
+```
+cp .env.example .env
+```
 
 ## Install dependencies
 
