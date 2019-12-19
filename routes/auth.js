@@ -1,4 +1,5 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const {
     register,
     login,
@@ -13,13 +14,18 @@ const router = express.Router();
 
 const { protect } = require('../middleware/auth');
 
-router.post('/register', register);
-router.post('/login', login);
+const authLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 10
+});
+
+router.post('/register', authLimiter, register);
+router.post('/login', authLimiter, login);
 router.get('/logout', logout);
 router.get('/me', protect, getMe);
 router.put('/updatedetails', protect, updateDetails);
 router.put('/updatepassword', protect, updatePassword);
-router.post('/forgotpassword', forgotPassword);
+router.post('/forgotpassword', authLimiter, forgotPassword);
 router.put('/resetpassword/:resettoken', resetPassword);
 
 module.exports = router;
