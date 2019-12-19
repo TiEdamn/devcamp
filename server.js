@@ -1,12 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-const colors = require('colors');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+
+const helmet = require('helmet');
+const xss = require('xss-clean');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -38,6 +40,12 @@ app.use(fileupload());
 
 // Sanitize data
 app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
