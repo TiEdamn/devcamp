@@ -4,10 +4,11 @@ const morgan = require('morgan');
 const fileupload = require('express-fileupload');
 const colors = require('colors');
 const cookieParser = require('cookie-parser');
-const mongoSanitize = require('express-mongo-sanitize');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+const routes = require('./routes');
 
+const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
@@ -19,13 +20,6 @@ dotenv.config({ path: './config/config.env' });
 
 // Connect to database
 connectDB();
-
-// Route files
-const bootcamps = require('./routes/bootcamps');
-const courses = require('./routes/courses');
-const users = require('./routes/users');
-const reviews = require('./routes/reviews');
-const auth = require('./routes/auth');
 
 const app = express();
 
@@ -65,12 +59,8 @@ app.use(limiter);
 // Prevent http param pollution
 app.use(hpp());
 
-// Mount routers
-app.use('/api/v1/bootcamps', bootcamps);
-app.use('/api/v1/courses', courses);
-app.use('/api/v1/users', users);
-app.use('/api/v1/reviews', reviews);
-app.use('/api/v1/auth', auth);
+// Export routes
+app.use(routes);
 
 app.use(errorHandler);
 

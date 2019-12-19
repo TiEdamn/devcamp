@@ -2,6 +2,7 @@ const ErrorResponse = require('../utils/errorResponse');
 
 const errorHandler = (err, req, res, next) => {
     let error = { ...err };
+    let data = {};
 
     error.message = err.message;
 
@@ -22,13 +23,17 @@ const errorHandler = (err, req, res, next) => {
 
     // Mongoose validation error
     if (err.name === 'ValidationError') {
-        message = Object.values(err.errors).map(val => val.message);
+        message = 'Validation error';
+        Object.keys(err.errors).map(val => {
+            data[val] = err.errors[val].message;
+        });
         error = new ErrorResponse(message, 400);
     }
 
     res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message || 'Server Error'
+        error: error.message || 'Server Error',
+        data
     });
 };
 
